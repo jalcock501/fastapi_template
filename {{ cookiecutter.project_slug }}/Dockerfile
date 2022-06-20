@@ -1,0 +1,36 @@
+# Docker template to generate working API
+FROM python:alpine
+
+# FastAPI args
+ARG SERVER_HOST
+ENV SERVER_HOST=${SERVER_HOST}
+ARG SERVER_PORT
+ENV SERVER_PORT=${SERVER_PORT}
+ARG VERSION
+ENV VERSION=${VERSION}
+ARG FASTAPI_TITLE
+ENV FASTAPI_TITLE=${FASTAPI_TITLE}
+ARG FASTAPI_DESC
+ENV FASTAPI_DESC=${FASTAPI_DESC}
+
+# Softwaredepot args
+ARG SOFTWAREDEPOT_URL
+ENV SOFTWAREDEPOT_URL=${SOFTWAREDEPOT_URL}
+ARG SOFTWAREDEPOT_USER
+ENV SOFTWAREDEPOT_USER=${SOFTWAREDEPOT_USER}
+ARG SOFTWAREDEPOT_PASS
+ENV SOFTWAREDEPOT_PASS=${SOFTWAREDEPOT_PASS}
+
+EXPOSE ${SERVER_PORT}
+
+WORKDIR /project
+
+COPY requirements.txt /project
+RUN pip config set global.extra-index-url https://$SOFTWAREDEPOT_USER:$SOFTWAREDEPOT_PASS@$SOFTWAREDEPOT_URL
+RUN pip install -r requirements.txt
+RUN rm requirements.txt
+
+ADD __main__.py /project
+ADD {{cookiecutter.project_name}} /project
+
+CMD uvicorn project_name.api:app --reload --host ${SERVER_HOST} --port ${SERVER_PORT}

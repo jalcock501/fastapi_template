@@ -1,0 +1,9 @@
+{
+	"project_slug": "fastapi-cookie",
+	"project_name": "fastapi_project",
+	"fastapi_title": "fastapi_title",
+	"fastapi_desc": "fastapi_description",
+	"fastapi_version": "DEVELOPMENT",
+	"server_host": "0.0.0.0",
+	"server_port": 8080
+}

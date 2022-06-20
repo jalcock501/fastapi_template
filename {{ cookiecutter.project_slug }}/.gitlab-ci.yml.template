@@ -1,0 +1,16 @@
+include:
+  - project: ukfast/threatmon/tools/pydefsectools/ci-templates
+    file: pylint.yml
+  - project: ukfast/threatmon/tools/pydefsectools/ci-templates
+    file: pytest.yml
+
+stages:
+  - lint
+  - test
+
+variables:
+  PROJECT_NAME: {{ cookiecutter.project_name }}
+  PROJECT_DIR: {{ cookiecutter.project_name }}
+  PYLINT_DIR: {{ cookiecutter.project_name }}
+  PYLINT_RC: .pylintrc
+  PYTEST_INI: pytest.ini
